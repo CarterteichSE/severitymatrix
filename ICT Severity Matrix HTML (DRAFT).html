@@ -1,0 +1,202 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Interactive Matrix Table</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+    .container {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+    }
+    .table-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 20px;
+    }
+    .table-container h2 {
+      text-align: center;
+      text-decoration: underline;
+    }
+    table {
+      border-collapse: collapse;
+      table-layout: fixed;
+      width: 100%;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 10px;
+      text-align: center;
+      vertical-align: top;
+      position: relative;
+      word-wrap: break-word;
+    }
+    td ul {
+      text-align: left;
+      padding-left: 20px;
+      margin: 0;
+    }
+    td li {
+      margin-bottom: 4px;
+    }
+    .vertical-line {
+      border-left: 2px solid black;
+      height: 100%;
+      margin: 0 20px;
+    }
+    .header-cell {
+      background-color: #E2EFDA;
+    }
+    .severity-level {
+      background-color: #000000;
+      color: white;
+    }
+    .critical-level {
+      background-color: #B10043;
+      color: white;
+    }
+    .high-level {
+      background-color: #E47F00;
+      color: white;
+    }
+    .level-3-4-etc {
+      background-color: #9FA0A4;
+      color: white;
+    }
+    .trust-header {
+      background-color: #D9F0FA;
+      color: black;
+    }
+  </style>
+
+<style>
+  /* existing styles... */
+
+  li[data-tooltip]:hover::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    background: #333;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    z-index: 10;
+  }
+</style>
+
+</head>
+<body>
+
+<div class="container">
+  <div class="table-container">
+    <h2>Incidents</h2>
+    <table>
+      <tr>
+        <th class="header-cell" rowspan="2">Severity Level</th>
+        <th class="header-cell" colspan="3">Internal Impact</th>
+      </tr>
+      <tr>
+        <th class="header-cell">People</th>
+        <th class="header-cell">Operations</th>
+        <th class="header-cell">Financial</th>
+      </tr>
+      <tr class="severity-level">
+        <td>Crisis Level 0 (P0)</td>
+        <td data-tooltip="Tooltip for P0 People">
+          <ul>
+            <li data-tooltip="Owner of Defining Severity: Health and Safety">Global Pandemic</li>
+            <li data-tooltip="Owner of Defining Severity: Global Security & Resilience">Mass Violence / Casualties</li>
+            <li data-tooltip="Owner of Defining Severity: Global Security & Resilience">Event that necessitates evacuation from region</li>
+          </ul>
+        </td>
+        <td data-tooltip="Tooltip for P0 Operations"></td>
+        <td data-tooltip="Tooltip for P0 Financial"></td>
+      </tr>
+      <tr class="critical-level">
+        <td>Critical Level 1 (P1)</td>
+        <td data-tooltip="Tooltip for P1 People"></td>
+        <td data-tooltip="Tooltip for P1 Operations"></td>
+        <td data-tooltip="Tooltip for P1 Financial"></td>
+      </tr>
+      <tr class="high-level">
+        <td>High Level 2 (P2)</td>
+        <td data-tooltip="Tooltip for P2 People"></td>
+        <td data-tooltip="Tooltip for P2 Operations"></td>
+        <td data-tooltip="Tooltip for P2 Financial"></td>
+      </tr>
+      <tr class="level-3-4-etc">
+        <td>Level 3</td>
+        <td data-tooltip="Tooltip for Level 3 People"></td>
+        <td data-tooltip="Tooltip for Level 3 Operations"></td>
+        <td data-tooltip="Tooltip for Level 3 Financial"></td>
+      </tr>
+      <tr class="level-3-4-etc">
+        <td>Level 4</td>
+        <td data-tooltip="Tooltip for Level 4 People"></td>
+        <td data-tooltip="Tooltip for Level 4 Operations"></td>
+        <td data-tooltip="Tooltip for Level 4 Financial"></td>
+      </tr>
+      <tr class="level-3-4-etc">
+        <td>Etc.</td>
+        <td data-tooltip="Tooltip for Etc. People"></td>
+        <td data-tooltip="Tooltip for Etc. Operations"></td>
+        <td data-tooltip="Tooltip for Etc. Financial"></td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="vertical-line"></div>
+
+  <div class="table-container">
+    <h2>Controversies</h2>
+    <table>
+      <tr>
+        <th class="trust-header" colspan="2">Trust/Reputation Impact</th>
+      </tr>
+      <tr>
+        <th class="trust-header">Customers</th>
+        <th class="trust-header">Brand</th>
+      </tr>
+      <tr class="severity-level">
+        <td data-tooltip="Tooltip for P0 Customers"></td>
+        <td data-tooltip="Tooltip for P0 Brand"></td>
+      </tr>
+      <tr class="critical-level">
+        <td data-tooltip="Tooltip for P1 Customers"></td>
+        <td data-tooltip="Tooltip for P1 Brand"></td>
+      </tr>
+      <tr class="high-level">
+        <td data-tooltip="Tooltip for P2 Customers"></td>
+        <td data-tooltip="Tooltip for P2 Brand"></td>
+      </tr>
+      <tr class="level-3-4-etc">
+        <td data-tooltip="Tooltip for Level 3 Customers"></td>
+        <td data-tooltip="Tooltip for Level 3 Brand"></td>
+      </tr>
+      <tr class="level-3-4-etc">
+        <td data-tooltip="Tooltip for Level 4 Customers"></td>
+        <td data-tooltip="Tooltip for Level 4 Brand"></td>
+      </tr>
+      <tr class="level-3-4-etc">
+        <td data-tooltip="Tooltip for Etc. Customers"></td>
+        <td data-tooltip="Tooltip for Etc. Brand"></td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+</body>
+</html>
