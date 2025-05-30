@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -77,30 +76,26 @@
       background-color: #D9F0FA;
       color: black;
     }
+    li[data-tooltip]:hover::after {
+      content: attr(data-tooltip);
+      position: absolute;
+      background: #333;
+      color: #fff;
+      padding: 5px 10px;
+      border-radius: 5px;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      white-space: nowrap;
+      z-index: 10;
+    }
   </style>
-
-<style>
-  /* existing styles... */
-
-  li[data-tooltip]:hover::after {
-    content: attr(data-tooltip);
-    position: absolute;
-    background: #333;
-    color: #fff;
-    padding: 5px 10px;
-    border-radius: 5px;
-    top: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    white-space: nowrap;
-    z-index: 10;
-  }
-</style>
-
 </head>
 <body>
 
 <div class="container">
+
+  <!-- INCIDENTS -->
   <div class="table-container">
     <h2>Incidents</h2>
     <table>
@@ -113,53 +108,173 @@
         <th class="header-cell">Operations</th>
         <th class="header-cell">Financial</th>
       </tr>
+
+      <!-- P0 -->
       <tr class="severity-level">
         <td>Crisis Level 0 (P0)</td>
-        <td data-tooltip="Tooltip for P0 People">
+
+        <!-- P0 People (already done) -->
+        <td>
           <ul>
-            <li data-tooltip="Owner of Defining Severity: Health and Safety">Global Pandemic</li>
-            <li data-tooltip="Owner of Defining Severity: Global Security & Resilience">Mass Violence / Casualties</li>
-            <li data-tooltip="Owner of Defining Severity: Global Security & Resilience">Event that necessitates evacuation from region</li>
+            <li data-tooltip="Owner of Defining Severity: Health and Safety">
+              Global Pandemic
+            </li>
+            <li data-tooltip="Owner of Defining Severity: Global Security & Resilience">
+              Mass Violence / Casualties
+            </li>
+            <li data-tooltip="Owner of Defining Severity: Global Security & Resilience">
+              Event that necessitates evacuation from region
+            </li>
           </ul>
         </td>
-        <td data-tooltip="Tooltip for P0 Operations"></td>
-        <td data-tooltip="Tooltip for P0 Financial"></td>
+
+        <!-- P0 Operations -->
+        <td>
+          <ul>
+            <li data-tooltip="Owner of Defining Severity: Global Security & Resilience (BCM)">
+              Loss of plant
+            </li>
+            <li data-tooltip="Owner of Defining Severity: IT Systems (IMO)">
+              Loss of critical IT system (i.e. enterprise-wide network outage)
+            </li>
+            <li data-tooltip="Owner of Defining Severity: Global Security & Resilience (BCM)">
+              Activation of multiple BCPs
+            </li>
+          </ul>
+        </td>
+
+        <!-- P0 Financial -->
+        <td>
+          <ul>
+            <li data-tooltip="Owner of Defining Severity: GRM">
+              >€50M direct or indirect revenue impact
+            </li>
+          </ul>
+        </td>
       </tr>
+
+      <!-- P1 -->
       <tr class="critical-level">
         <td>Critical Level 1 (P1)</td>
-        <td data-tooltip="Tooltip for P1 People"></td>
-        <td data-tooltip="Tooltip for P1 Operations"></td>
-        <td data-tooltip="Tooltip for P1 Financial"></td>
+
+        <!-- P1 People -->
+        <td>
+          <ul>
+            <li data-tooltip="Owner of Defining Severity: Global Health and Safety">
+              Business related and/or customer facing Fatality
+            </li>
+            <li data-tooltip="Owner of Defining Severity: Global Security & Resilience">
+              Violent crime
+            </li>
+            <li data-tooltip="Owner of Defining Severity: Ethics & Compliance">
+              Zero tolerance policies
+            </li>
+            <li data-tooltip="Owner of Defining Severity: Global Health and Safety">
+              Harassment
+            </li>
+            <li data-tooltip="Owner of Defining Severity: Global Security & Resilience">
+              Threat of violence
+            </li>
+            <li data-tooltip="Owner of Defining Severity: Global Security & Resilience">
+              Shelter in place event
+            </li>
+          </ul>
+        </td>
+
+        <!-- P1 Operations -->
+        <td>
+          <ul>
+            <li data-tooltip="Owner of Defining Severity: Product, Project, System Quality & Offer Reliability">
+              >1 day in manufacturing disruption
+            </li>
+            <li data-tooltip="Owner of Defining Severity: Procurement">
+              Loss of sole source supplier of critical material
+            </li>
+            <li data-tooltip="Owner of Defining Severity: Data">
+              Loss of “Confidential” data
+            </li>
+            <li data-tooltip="Owner of Defining Severity: IT Systems (IMO)">
+              Loss of critical application
+            </li>
+          </ul>
+        </td>
+
+        <!-- P1 Financial -->
+        <td>
+          <ul>
+            <li data-tooltip="Owner of Defining Severity: GRM">
+              >€10M < €50M direct or indirect revenue impact
+            </li>
+          </ul>
+        </td>
       </tr>
+
+      <!-- P2 -->
       <tr class="high-level">
         <td>High Level 2 (P2)</td>
-        <td data-tooltip="Tooltip for P2 People"></td>
-        <td data-tooltip="Tooltip for P2 Operations"></td>
-        <td data-tooltip="Tooltip for P2 Financial"></td>
+
+        <!-- P2 People -->
+        <td>
+          <ul>
+            <li data-tooltip="Owner of Defining Severity: Health and Safety">
+              Life-altering accident
+            </li>
+            <li data-tooltip="Owner of Defining Severity: Health and Safety">
+              >24h in hospital
+            </li>
+          </ul>
+        </td>
+
+        <!-- P2 Operations -->
+        <td>
+          <ul>
+            <li data-tooltip="Owner of Defining Severity: Product, Project, System Quality & Offer Reliability">
+              >6h <1d in manufacturing disruption
+            </li>
+            <li data-tooltip="Owner of Defining Severity: Global Security & Resilience (BCM)">
+              Partial loss of plant
+            </li>
+            <li data-tooltip="Owner of Defining Severity: Data">
+              Loss of “Restricted” data
+            </li>
+          </ul>
+        </td>
+
+        <!-- P2 Financial -->
+        <td>
+          <ul>
+            <li data-tooltip="Owner of Defining Severity: GRM">
+              >€1M < €10M direct or indirect revenue impact
+            </li>
+          </ul>
+        </td>
       </tr>
+
+      <!-- Level 3, 4, Etc. can remain blank or be customized as needed -->
       <tr class="level-3-4-etc">
         <td>Level 3</td>
-        <td data-tooltip="Tooltip for Level 3 People"></td>
-        <td data-tooltip="Tooltip for Level 3 Operations"></td>
-        <td data-tooltip="Tooltip for Level 3 Financial"></td>
+        <td></td>
+        <td></td>
+        <td></td>
       </tr>
       <tr class="level-3-4-etc">
         <td>Level 4</td>
-        <td data-tooltip="Tooltip for Level 4 People"></td>
-        <td data-tooltip="Tooltip for Level 4 Operations"></td>
-        <td data-tooltip="Tooltip for Level 4 Financial"></td>
+        <td></td>
+        <td></td>
+        <td></td>
       </tr>
       <tr class="level-3-4-etc">
         <td>Etc.</td>
-        <td data-tooltip="Tooltip for Etc. People"></td>
-        <td data-tooltip="Tooltip for Etc. Operations"></td>
-        <td data-tooltip="Tooltip for Etc. Financial"></td>
+        <td></td>
+        <td></td>
+        <td></td>
       </tr>
     </table>
   </div>
 
   <div class="vertical-line"></div>
 
+  <!-- CONTROVERSIES -->
   <div class="table-container">
     <h2>Controversies</h2>
     <table>
@@ -170,33 +285,98 @@
         <th class="trust-header">Customers</th>
         <th class="trust-header">Brand</th>
       </tr>
+
+      <!-- P0 -->
       <tr class="severity-level">
-        <td data-tooltip="Tooltip for P0 Customers"></td>
-        <td data-tooltip="Tooltip for P0 Brand"></td>
+        <td>
+          <ul>
+            <li data-tooltip="Owner of Defining Severity: Cybersecurity">
+              Cyber install base attack shutting down operations
+            </li>
+            <li data-tooltip="Owner of Defining Severity: Cybersecurity">
+              Global supply chain disruption
+            </li>
+            <li data-tooltip="Owner of Defining Severity: Cybersecurity">
+              Loss of strategic account customers and/or strategic market access
+            </li>
+          </ul>
+        </td>
+        <td>
+          <ul>
+            <li data-tooltip="Owner of Defining Severity: Ethics & Compliance">
+              Major, global, media coverage leading to risk of long-term SE brand and reputational damage
+            </li>
+            <li data-tooltip="Owner of Defining Severity: Ethics & Compliance">
+              Punitive measures (fines, sanctions, penalties, debarment) imposed by government or regulatory authorities
+            </li>
+          </ul>
+        </td>
       </tr>
+
+      <!-- P1 -->
       <tr class="critical-level">
-        <td data-tooltip="Tooltip for P1 Customers"></td>
-        <td data-tooltip="Tooltip for P1 Brand"></td>
+        <td>
+          <ul>
+            <li data-tooltip="Owner of Defining Severity: Cybersecurity">
+              Direct interaction with critical infrastructure that can cause harm to people or damage to customer physical or virtual property
+            </li>
+            <li data-tooltip="Owner of Defining Severity: Cybersecurity">
+              Confirmed Cyber compromise
+            </li>
+          </ul>
+        </td>
+        <td>
+          <ul>
+            <li data-tooltip="Owner of Defining Severity: Cybersecurity">
+              Loss of Sensitive data not reported within expected stakeholder requirements (customer, media, regulatory)
+            </li>
+            <li data-tooltip="Owner of Defining Severity: Cybersecurity">
+              Violent/criminal activists
+            </li>
+          </ul>
+        </td>
       </tr>
+
+      <!-- P2 -->
       <tr class="high-level">
-        <td data-tooltip="Tooltip for P2 Customers"></td>
-        <td data-tooltip="Tooltip for P2 Brand"></td>
+        <td>
+          <ul>
+            <li data-tooltip="Owner of Defining Severity: Cybersecurity">
+              Potential Cyber compromise
+            </li>
+            <li data-tooltip="Owner of Defining Severity: Cybersecurity">
+              Cargo / Product Theft (regional inventory)
+            </li>
+          </ul>
+        </td>
+        <td>
+          <ul>
+            <li data-tooltip="Owner of Defining Severity: Cybersecurity">
+              Regional media coverage leading to risk of local market SE brand and reputational damage
+            </li>
+            <li data-tooltip="Owner of Defining Severity: Cybersecurity">
+              Non-violent activists
+            </li>
+          </ul>
+        </td>
+      </tr>
+
+      <!-- Level 3, 4, Etc. -->
+      <tr class="level-3-4-etc">
+        <td></td>
+        <td></td>
       </tr>
       <tr class="level-3-4-etc">
-        <td data-tooltip="Tooltip for Level 3 Customers"></td>
-        <td data-tooltip="Tooltip for Level 3 Brand"></td>
+        <td></td>
+        <td></td>
       </tr>
       <tr class="level-3-4-etc">
-        <td data-tooltip="Tooltip for Level 4 Customers"></td>
-        <td data-tooltip="Tooltip for Level 4 Brand"></td>
-      </tr>
-      <tr class="level-3-4-etc">
-        <td data-tooltip="Tooltip for Etc. Customers"></td>
-        <td data-tooltip="Tooltip for Etc. Brand"></td>
+        <td></td>
+        <td></td>
       </tr>
     </table>
   </div>
-</div>
 
+</div>
 </body>
 </html>
