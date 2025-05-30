@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,197 +5,276 @@
   <title>Interactive Matrix Table</title>
   <style>
     body {
+      margin: 0;
+      padding: 20px;
+      font-family: Arial, sans-serif;
       display: flex;
       justify-content: center;
-      align-items: flex-start;
-      margin: 0;
-      padding: 0;
-      font-family: Arial, sans-serif;
-    }
-    .container {
-      display: flex;
-      flex-direction: row;
-      align-items: flex-start;
-    }
-    .table-container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin: 20px;
-    }
-    .table-container h2 {
-      text-align: center;
-      text-decoration: underline;
     }
     table {
       border-collapse: collapse;
       table-layout: fixed;
-      width: 100%;
+      width: 90%;
     }
+    colgroup col {
+      /* define widths */
+    }
+    col.incident  { width: 16%; }
+    col.separator { width: 6pt; background-color: black; }
+    col.controv   { width: 16%; }
+
     th, td {
       border: 1px solid #ccc;
-      padding: 10px;
-      text-align: center;
+      padding: 8px;
       vertical-align: top;
       position: relative;
       word-wrap: break-word;
     }
+
+    /* Remove left‐column borders for the first two header rows */
+    tr.annotation td:first-child,
+    tr.section-header-row td:first-child {
+      border: none;
+      background: transparent;
+    }
+
+    /* Annotation row */
+    tr.annotation td {
+      color: gray;
+      font-size: 20px;
+    }
+
+    /* Section titles */
+    .section-header-row td {
+      background: #E2EFDA;
+    }
+    .section-header {
+      font-size: 20px;
+      text-decoration: underline;
+      text-transform: uppercase;
+      text-align: center;
+    }
+
+    /* Subheaders */
+    tr.header-row th,
+    tr.subheader-row th {
+      text-align: center;
+      font-weight: bold;
+      text-decoration: none;
+    }
+    tr.header-row th { background: #E2EFDA; }
+    tr.subheader-row th.header-cell { background: #E2EFDA; }
+    tr.subheader-row th.trust-header { background: #D9F0FA; }
+
+    /* Row colors */
+    .severity-level { background: #000; color: #fff; }
+    .critical-level { background: #B10043; color: #fff; }
+    .high-level    { background: #E47F00; color: #fff; }
+    .level-etc     { background: #9FA0A4; color: #fff; }
+
     td ul {
-      text-align: left;
-      padding-left: 20px;
       margin: 0;
+      padding-left: 18px;
+      text-align: left;
     }
     td li {
       margin-bottom: 4px;
     }
-    .vertical-line {
-      border-left: 2px solid black;
-      height: 100%;
-      margin: 0 20px;
+    li.indent { margin-left: 1.5em; }
+    li[data-tooltip]:hover::after {
+      content: attr(data-tooltip);
+      position: absolute;
+      background: #333;
+      color: #fff;
+      padding: 4px 8px;
+      border-radius: 4px;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      white-space: nowrap;
+      z-index: 10;
     }
-    .header-cell {
-      background-color: #E2EFDA;
-    }
-    .severity-level {
-      background-color: #000000;
-      color: white;
-    }
-    .critical-level {
-      background-color: #B10043;
-      color: white;
-    }
-    .high-level {
-      background-color: #E47F00;
-      color: white;
-    }
-    .level-3-4-etc {
-      background-color: #9FA0A4;
-      color: white;
-    }
-    .trust-header {
-      background-color: #D9F0FA;
-      color: black;
+
+    /* Separator cell override */
+    .separator-cell {
+      background-color: #000 !important;
+      border: none !important;
+      width: 6pt;
+      padding: 0;
     }
   </style>
-
-<style>
-  /* existing styles... */
-
-  li[data-tooltip]:hover::after {
-    content: attr(data-tooltip);
-    position: absolute;
-    background: #333;
-    color: #fff;
-    padding: 5px 10px;
-    border-radius: 5px;
-    top: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    white-space: nowrap;
-    z-index: 10;
-  }
-</style>
-
 </head>
 <body>
 
-<div class="container">
-  <div class="table-container">
-    <h2>Incidents</h2>
-    <table>
-      <tr>
-        <th class="header-cell" rowspan="2">Severity Level</th>
-        <th class="header-cell" colspan="3">Internal Impact</th>
-      </tr>
-      <tr>
-        <th class="header-cell">People</th>
-        <th class="header-cell">Operations</th>
-        <th class="header-cell">Financial</th>
-      </tr>
-      <tr class="severity-level">
-        <td>Crisis Level 0 (P0)</td>
-        <td data-tooltip="Tooltip for P0 People">
-          <ul>
-            <li data-tooltip="Owner of Defining Severity: Health and Safety">Global Pandemic</li>
-            <li data-tooltip="Owner of Defining Severity: Global Security & Resilience">Mass Violence / Casualties</li>
-            <li data-tooltip="Owner of Defining Severity: Global Security & Resilience">Event that necessitates evacuation from region</li>
-          </ul>
-        </td>
-        <td data-tooltip="Tooltip for P0 Operations"></td>
-        <td data-tooltip="Tooltip for P0 Financial"></td>
-      </tr>
-      <tr class="critical-level">
-        <td>Critical Level 1 (P1)</td>
-        <td data-tooltip="Tooltip for P1 People"></td>
-        <td data-tooltip="Tooltip for P1 Operations"></td>
-        <td data-tooltip="Tooltip for P1 Financial"></td>
-      </tr>
-      <tr class="high-level">
-        <td>High Level 2 (P2)</td>
-        <td data-tooltip="Tooltip for P2 People"></td>
-        <td data-tooltip="Tooltip for P2 Operations"></td>
-        <td data-tooltip="Tooltip for P2 Financial"></td>
-      </tr>
-      <tr class="level-3-4-etc">
-        <td>Level 3</td>
-        <td data-tooltip="Tooltip for Level 3 People"></td>
-        <td data-tooltip="Tooltip for Level 3 Operations"></td>
-        <td data-tooltip="Tooltip for Level 3 Financial"></td>
-      </tr>
-      <tr class="level-3-4-etc">
-        <td>Level 4</td>
-        <td data-tooltip="Tooltip for Level 4 People"></td>
-        <td data-tooltip="Tooltip for Level 4 Operations"></td>
-        <td data-tooltip="Tooltip for Level 4 Financial"></td>
-      </tr>
-      <tr class="level-3-4-etc">
-        <td>Etc.</td>
-        <td data-tooltip="Tooltip for Etc. People"></td>
-        <td data-tooltip="Tooltip for Etc. Operations"></td>
-        <td data-tooltip="Tooltip for Etc. Financial"></td>
-      </tr>
-    </table>
-  </div>
+<table>
+  <colgroup>
+    <col class="incident">    <!-- Severity Level col -->
+    <col class="incident">    <!-- Incidents: People -->
+    <col class="incident">    <!-- Incidents: Operations -->
+    <col class="incident">    <!-- Incidents: Financial -->
+    <col class="separator">   <!-- Solid black separator, 6pt -->
+    <col class="controv">     <!-- Controversies: Customers -->
+    <col class="controv">     <!-- Controversies: Brand -->
+  </colgroup>
 
-  <div class="vertical-line"></div>
+  <!-- Annotation row -->
+  <tr class="annotation">
+    <td></td>
+    <td colspan="3" style="text-align: right;">Non-Public</td>
+    <td class="separator-cell"></td>
+    <td colspan="2" style="text-align: left;">Public</td>
+  </tr>
 
-  <div class="table-container">
-    <h2>Controversies</h2>
-    <table>
-      <tr>
-        <th class="trust-header" colspan="2">Trust/Reputation Impact</th>
-      </tr>
-      <tr>
-        <th class="trust-header">Customers</th>
-        <th class="trust-header">Brand</th>
-      </tr>
-      <tr class="severity-level">
-        <td data-tooltip="Tooltip for P0 Customers"></td>
-        <td data-tooltip="Tooltip for P0 Brand"></td>
-      </tr>
-      <tr class="critical-level">
-        <td data-tooltip="Tooltip for P1 Customers"></td>
-        <td data-tooltip="Tooltip for P1 Brand"></td>
-      </tr>
-      <tr class="high-level">
-        <td data-tooltip="Tooltip for P2 Customers"></td>
-        <td data-tooltip="Tooltip for P2 Brand"></td>
-      </tr>
-      <tr class="level-3-4-etc">
-        <td data-tooltip="Tooltip for Level 3 Customers"></td>
-        <td data-tooltip="Tooltip for Level 3 Brand"></td>
-      </tr>
-      <tr class="level-3-4-etc">
-        <td data-tooltip="Tooltip for Level 4 Customers"></td>
-        <td data-tooltip="Tooltip for Level 4 Brand"></td>
-      </tr>
-      <tr class="level-3-4-etc">
-        <td data-tooltip="Tooltip for Etc. Customers"></td>
-        <td data-tooltip="Tooltip for Etc. Brand"></td>
-      </tr>
-    </table>
-  </div>
-</div>
+  <!-- Section titles -->
+  <tr class="section-header-row">
+    <td></td>
+    <td class="section-header" colspan="3">INCIDENTS</td>
+    <td class="separator-cell"></td>
+    <td class="section-header" colspan="2">CONTROVERSIES</td>
+  </tr>
+
+  <!-- Header rows -->
+  <tr class="header-row">
+    <th rowspan="2"></th>
+    <th colspan="3">Internal Impact</th>
+    <th class="separator-cell"></th>
+    <th colspan="2">Trust / Reputation Impact</th>
+  </tr>
+  <tr class="subheader-row">
+    <th class="header-cell">People</th>
+    <th class="header-cell">Operations</th>
+    <th class="header-cell">Financial</th>
+    <td class="separator-cell"></td>
+    <th class="trust-header">Customers</th>
+    <th class="trust-header">Brand</th>
+  </tr>
+
+  <!-- P0 -->
+  <tr class="severity-level">
+    <td>Crisis Level 0 (P0)</td>
+    <td>
+      <ul>
+        <li data-tooltip="Owner of Defining Severity: Health and Safety">Global Pandemic</li>
+        <li data-tooltip="Owner of Defining Severity: Global Security & Resilience">Mass Violence / Casualties</li>
+        <li data-tooltip="Owner of Defining Severity: Global Security & Resilience">Event that necessitates evacuation from region</li>
+      </ul>
+    </td>
+    <td>
+      <ul>
+        <li data-tooltip="Owner of Defining Severity: Global Security & Resilience (BCM)">Loss of plant</li>
+        <li data-tooltip="Owner of Defining Severity: IT Systems (IMO)">Loss of critical IT system (i.e. enterprise-wide network outage)</li>
+        <li data-tooltip="Owner of Defining Severity: Global Security & Resilience (BCM)">Activation of multiple BCPs</li>
+      </ul>
+    </td>
+    <td>
+      <ul>
+        <li data-tooltip="Owner of Defining Severity: GRM">>€50M direct or indirect revenue impact</li>
+      </ul>
+    </td>
+    <td class="separator-cell"></td>
+    <td>
+      <ul>
+        <li data-tooltip="Owner of Defining Severity: Cybersecurity">Cyber install base attack shutting down operations</li>
+        <li data-tooltip="Owner of Defining Severity: Cybersecurity">Global supply chain disruption</li>
+        <li data-tooltip="Owner of Defining Severity: Cybersecurity">Loss of strategic account customers and/or strategic market access</li>
+      </ul>
+    </td>
+    <td>
+      <ul>
+        <li data-tooltip="Owner of Defining Severity: Ethics & Compliance">Major, global, media coverage leading to risk of long-term SE brand and reputational damage</li>
+        <li data-tooltip="Owner of Defining Severity: Ethics & Compliance">Punitive measures (fines, sanctions, penalties, debarment) imposed by government or regulatory authorities</li>
+      </ul>
+    </td>
+  </tr>
+
+  <!-- P1 -->
+  <tr class="critical-level">
+    <td>Critical Level 1 (P1)</td>
+    <td>
+      <ul>
+        <li data-tooltip="Owner of Defining Severity: Global Health and Safety">Business related and/or customer facing Fatality</li>
+        <li data-tooltip="Owner of Defining Severity: Global Security & Resilience">Violent crime</li>
+        <li data-tooltip="Owner of Defining Severity: Ethics & Compliance">Zero tolerance policies</li>
+        <li class="indent" data-tooltip="Owner of Defining Severity: Global Health and Safety">Harassment</li>
+        <li class="indent" data-tooltip="Owner of Defining Severity: Global Security & Resilience">Threat of violence</li>
+        <li data-tooltip="Owner of Defining Severity: Global Security & Resilience">Shelter in place event</li>
+      </ul>
+    </td>
+    <td>
+      <ul>
+        <li data-tooltip="Owner of Defining Severity: Product, Project, System Quality & Offer Reliability">>1 day in manufacturing disruption</li>
+        <li data-tooltip="Owner of Defining Severity: Procurement">Loss of sole source supplier of critical material</li>
+        <li data-tooltip="Owner of Defining Severity: Data">Loss of “Confidential” data</li>
+        <li data-tooltip="Owner of Defining Severity: IT Systems (IMO)">Loss of critical application</li>
+      </ul>
+    </td>
+    <td>
+      <ul>
+        <li data-tooltip="Owner of Defining Severity: GRM">>€10M < €50M direct or indirect revenue impact</li>
+      </ul>
+    </td>
+    <td class="separator-cell"></td>
+    <td>
+      <ul>
+        <li data-tooltip="Owner of Defining Severity: Cybersecurity">Direct interaction with critical infrastructure that can cause harm to people or damage to customer physical or virtual property</li>
+        <li data-tooltip="Owner of Defining Severity: Cybersecurity">Confirmed Cyber compromise</li>
+      </ul>
+    </td>
+    <td>
+      <ul>
+        <li data-tooltip="Owner of Defining Severity: Cybersecurity">Loss of Sensitive data not reported within expected stakeholder requirements (customer, media, regulatory)</li>
+        <li data-tooltip="Owner of Defining Severity: Cybersecurity">Violent/criminal activists</li>
+      </ul>
+    </td>
+  </tr>
+
+  <!-- P2 -->
+  <tr class="high-level">
+    <td>High Level 2 (P2)</td>
+    <td>
+      <ul>
+        <li data-tooltip="Owner of Defining Severity: Health and Safety">Life-altering accident</li>
+        <li data-tooltip="Owner of Defining Severity: Health and Safety">>24h in hospital</li>
+      </ul>
+    </td>
+    <td>
+      <ul>
+        <li data-tooltip="Owner of Defining Severity: Product, Project, System Quality & Offer Reliability">>6h < 1d in manufacturing disruption</li>
+        <li data-tooltip="Owner of Defining Severity: Global Security & Resilience (BCM)">Partial loss of plant</li>
+        <li data-tooltip="Owner of Defining Severity: Data">Loss of “Restricted” data</li>
+      </ul>
+    </td>
+    <td>
+      <ul>
+        <li data-tooltip="Owner of Defining Severity: GRM">>€1M < €10M direct or indirect revenue impact</li>
+      </ul>
+    </td>
+    <td class="separator-cell"></td>
+    <td>
+      <ul>
+        <li data-tooltip="Owner of Defining Severity: Cybersecurity">Potential Cyber compromise</li>
+        <li data-tooltip="Owner of Defining Severity: Cybersecurity">Cargo / Product Theft (regional inventory)</li>
+      </ul>
+    </td>
+    <td>
+      <ul>
+        <li data-tooltip="Owner of Defining Severity: Cybersecurity">Regional media coverage leading to risk of local market SE brand and reputational damage</li>
+        <li data-tooltip="Owner of Defining Severity: Cybersecurity">Non-violent activists</li>
+      </ul>
+    </td>
+  </tr>
+
+  <!-- Lower levels -->
+  <tr class="level-etc">
+    <td>Level 3</td><td></td><td></td><td></td><td class="separator-cell"></td><td></td><td></td>
+  </tr>
+  <tr class="level-etc">
+    <td>Level 4</td><td></td><td></td><td></td><td class="separator-cell"></td><td></td><td></td>
+  </tr>
+  <tr class="level-etc">
+    <td>Etc.</td><td></td><td></td><td></td><td class="separator-cell"></td><td></td><td></td>
+  </tr>
+</table>
 
 </body>
 </html>
