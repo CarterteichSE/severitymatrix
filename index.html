@@ -55,16 +55,32 @@
       text-align: center;
     }
 
-    /* Subheaders */
+    /* Header rows */
     tr.header-row th,
     tr.subheader-row th {
       text-align: center;
       font-weight: bold;
       text-decoration: none;
     }
-    tr.header-row th { background: #E2EFDA; }
-    tr.subheader-row th.header-cell { background: #E2EFDA; }
-    tr.subheader-row th.trust-header { background: #D9F0FA; }
+    /* Header-row: first transparent, others green */
+    tr.header-row th:first-child {
+      background: transparent !important;
+    }
+    tr.header-row th:not(:first-child) {
+      background: #E2EFDA;
+    }
+
+    /* Subheader-row: make the first cell transparent */
+    tr.subheader-row th:first-child {
+      background: transparent !important;
+    }
+    /* Ensure People, Operations, Financial use the blue contractors */
+    tr.subheader-row th.header-cell {
+      background: #D9F0FA !important;
+    }
+    tr.subheader-row th.trust-header {
+      background: #D9F0FA;
+    }
 
     /* Row colors */
     .severity-level { background: #000; color: #fff; }
@@ -221,7 +237,8 @@
       </ul>
     </td>
     <td>
-      <ul>
+      
+  <ul>
         <li data-tooltip="Owner of Defining Severity: Cybersecurity">Loss of Sensitive data not reported within expected stakeholder requirements (customer, media, regulatory)</li>
         <li data-tooltip="Owner of Defining Severity: Cybersecurity">Violent/criminal activists</li>
       </ul>
@@ -253,7 +270,7 @@
     <td>
       <ul>
         <li data-tooltip="Owner of Defining Severity: Cybersecurity">Potential Cyber compromise</li>
-        <li data-tooltip="Owner of Defining Severity: Cybersecurity">Cargo / Product Theft (regional inventory)</li>
+        <li data-tooltip="Owner of DefiningSeverity: Cybersecurity">Cargo / Product Theft (regional inventory)</li>
       </ul>
     </td>
     <td>
