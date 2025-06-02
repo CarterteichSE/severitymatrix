@@ -43,16 +43,21 @@
       color: gray;
       font-size: 20px;
     }
+    
+    .visibility-annotation {
+        font-weight: bold;
+    }
 
     /* Section titles */
-    .section-header-row td {
-      background: #E2EFDA;
+    .section-header-row .section-header {
+      background: transparent; /* Set background to transparent */
     }
     .section-header {
       font-size: 20px;
       text-decoration: underline;
       text-transform: uppercase;
       text-align: center;
+      font-weight: bold; /* Embolden the header text */
     }
 
     /* Header rows */
@@ -70,14 +75,20 @@
       background: #E2EFDA;
     }
 
+    /* Change color for Trust / Reputation Impact header */
+    tr.header-row th.trust-reputation-header {
+        background: #D9F0FA;
+    }
+
     /* Subheader-row: make the first cell transparent */
     tr.subheader-row th:first-child {
       background: transparent !important;
     }
-    /* Ensure People, Operations, Financial use the blue contractors */
+    /* Set People, Operations, Financial to green */
     tr.subheader-row th.header-cell {
-      background: #D9F0FA !important;
+      background: #E2EFDA !important;
     }
+    /* Set Customers, Brand to blue */
     tr.subheader-row th.trust-header {
       background: #D9F0FA;
     }
@@ -87,6 +98,14 @@
     .critical-level { background: #B10043; color: #fff; }
     .high-level    { background: #E47F00; color: #fff; }
     .level-etc     { background: #9FA0A4; color: #fff; }
+
+    /* Bold the first column (Severity Level) */
+    .severity-level td:first-child,
+    .critical-level td:first-child,
+    .high-level td:first-child,
+    .level-etc td:first-child {
+      font-weight: bold;
+    }
 
     td ul {
       margin: 0;
@@ -124,24 +143,15 @@
 
 <table>
   <colgroup>
-    <col class="incident">    <!-- Severity Level col -->
-    <col class="incident">    <!-- Incidents: People -->
-    <col class="incident">    <!-- Incidents: Operations -->
-    <col class="incident">    <!-- Incidents: Financial -->
-    <col class="separator">   <!-- Solid black separator, 6pt -->
-    <col class="controv">     <!-- Controversies: Customers -->
-    <col class="controv">     <!-- Controversies: Brand -->
-  </colgroup>
+    <col class="incident">    <col class="incident">    <col class="incident">    <col class="incident">    <col class="separator">   <col class="controv">     <col class="controv">     </colgroup>
 
-  <!-- Annotation row -->
   <tr class="annotation">
     <td></td>
-    <td colspan="3" style="text-align: right;">Non-Public</td>
+    <td class="visibility-annotation" colspan="3" style="text-align: right;">Non-Public</td>
     <td class="separator-cell"></td>
-    <td colspan="2" style="text-align: left;">Public</td>
+    <td class="visibility-annotation" colspan="2" style="text-align: left;">Public</td>
   </tr>
 
-  <!-- Section titles -->
   <tr class="section-header-row">
     <td></td>
     <td class="section-header" colspan="3">INCIDENTS</td>
@@ -149,12 +159,11 @@
     <td class="section-header" colspan="2">CONTROVERSIES</td>
   </tr>
 
-  <!-- Header rows -->
   <tr class="header-row">
     <th rowspan="2"></th>
     <th colspan="3">Internal Impact</th>
     <th class="separator-cell"></th>
-    <th colspan="2">Trust / Reputation Impact</th>
+    <th colspan="2" class="trust-reputation-header">Trust / Reputation Impact</th>
   </tr>
   <tr class="subheader-row">
     <th class="header-cell">People</th>
@@ -165,7 +174,6 @@
     <th class="trust-header">Brand</th>
   </tr>
 
-  <!-- P0 -->
   <tr class="severity-level">
     <td>Crisis Level 0 (P0)</td>
     <td>
@@ -203,7 +211,6 @@
     </td>
   </tr>
 
-  <!-- P1 -->
   <tr class="critical-level">
     <td>Critical Level 1 (P1)</td>
     <td>
@@ -245,7 +252,6 @@
     </td>
   </tr>
 
-  <!-- P2 -->
   <tr class="high-level">
     <td>High Level 2 (P2)</td>
     <td>
@@ -281,7 +287,6 @@
     </td>
   </tr>
 
-  <!-- Lower levels -->
   <tr class="level-etc">
     <td>Level 3</td><td></td><td></td><td></td><td class="separator-cell"></td><td></td><td></td>
   </tr>
