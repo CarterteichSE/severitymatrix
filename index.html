@@ -2,36 +2,48 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Interactive Matrix Table</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
   <style>
+    /* Custom styles to override or extend Tailwind */
     body {
+      font-family: 'Inter', sans-serif; /* Use Inter font */
       margin: 0;
       padding: 20px;
-      font-family: Arial, sans-serif;
       display: flex;
       justify-content: center;
+      align-items: flex-start; /* Align to top */
+      min-height: 100vh; /* Ensure full viewport height */
+      background-color: #f3f4f6; /* Light gray background */
     }
     table {
       border-collapse: collapse;
       table-layout: fixed;
-      width: 90%;
+      width: 90%; /* Fluid width */
+      max-width: 1200px; /* Max width for larger screens */
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+      border-radius: 0.5rem; /* Rounded corners for the table */
+      overflow: hidden; /* Ensures rounded corners are visible */
     }
     colgroup col {
-      /* define widths */
+      /* Define widths - Tailwind classes can also be used for this */
     }
-    col.incident  { width: 16%; }
+    col.incident { width: 16%; }
     col.separator { width: 6pt; background-color: black; }
-    col.controv   { width: 16%; }
+    col.controv { width: 16%; }
 
     th, td {
-      border: 1px solid #ccc;
-      padding: 8px;
+      border: 1px solid #e5e7eb; /* Light border color */
+      padding: 12px; /* More padding */
       vertical-align: top;
       position: relative;
       word-wrap: break-word;
+      border-radius: 0.25rem; /* Rounded corners for cells */
     }
 
-    /* Remove left‐column borders for the first two header rows */
+    /* Remove left-column borders for the first two header rows */
     tr.annotation td:first-child,
     tr.section-header-row td:first-child {
       border: none;
@@ -40,12 +52,13 @@
 
     /* Annotation row */
     tr.annotation td {
-      color: gray;
-      font-size: 20px;
+      color: #6b7280; /* Gray text */
+      font-size: 1.25rem; /* 20px */
+      font-weight: 600; /* Semi-bold */
     }
     
     .visibility-annotation {
-        font-weight: bold;
+      font-weight: bold;
     }
 
     /* Section titles */
@@ -53,11 +66,12 @@
       background: transparent; /* Set background to transparent */
     }
     .section-header {
-      font-size: 20px;
+      font-size: 1.25rem; /* 20px */
       text-decoration: underline;
       text-transform: uppercase;
       text-align: center;
       font-weight: bold; /* Embolden the header text */
+      color: #1f2937; /* Darker text for headers */
     }
 
     /* Header rows */
@@ -66,18 +80,19 @@
       text-align: center;
       font-weight: bold;
       text-decoration: none;
+      border-radius: 0.25rem; /* Rounded corners for header cells */
     }
     /* Header-row: first transparent, others green */
     tr.header-row th:first-child {
       background: transparent !important;
     }
     tr.header-row th:not(:first-child) {
-      background: #E2EFDA;
+      background: #dcfce7; /* Light green */
     }
 
     /* Change color for Trust / Reputation Impact header */
     tr.header-row th.trust-reputation-header {
-        background: #D9F0FA;
+      background: #dbeafe; /* Light blue */
     }
 
     /* Subheader-row: make the first cell transparent */
@@ -86,18 +101,18 @@
     }
     /* Set People, Operations, Financial to green */
     tr.subheader-row th.header-cell {
-      background: #E2EFDA !important;
+      background: #dcfce7 !important; /* Light green */
     }
     /* Set Customers, Brand to blue */
     tr.subheader-row th.trust-header {
-      background: #D9F0FA;
+      background: #dbeafe; /* Light blue */
     }
 
     /* Row colors */
-    .severity-level { background: #000; color: #fff; }
-    .critical-level { background: #B10043; color: #fff; }
-    .high-level    { background: #E47F00; color: #fff; }
-    .level-etc     { background: #9FA0A4; color: #fff; }
+    .severity-level { background: #1f2937; color: #fff; } /* Dark background for severity */
+    .critical-level { background: #be123c; color: #fff; } /* Red for critical */
+    .high-level { background: #ea580c; color: #fff; } /* Orange for high */
+    .level-etc { background: #9ca3af; color: #fff; } /* Gray for etc. levels */
 
     /* Bold the first column (Severity Level) */
     .severity-level td:first-child,
@@ -111,23 +126,32 @@
       margin: 0;
       padding-left: 18px;
       text-align: left;
+      list-style-type: disc; /* Ensure bullet points are visible */
     }
     td li {
       margin-bottom: 4px;
+      cursor: help; /* Indicate hoverable item */
     }
     li.indent { margin-left: 1.5em; }
-    li[data-tooltip]:hover::after {
-      content: attr(data-tooltip);
-      position: absolute;
-      background: #333;
+
+    /* Custom Tooltip styles */
+    #custom-tooltip {
+      position: fixed;
+      display: none; /* Initially hidden */
+      background-color: #1f2937; /* Dark background */
       color: #fff;
-      padding: 4px 8px;
-      border-radius: 4px;
-      top: 100%;
-      left: 50%;
-      transform: translateX(-50%);
-      white-space: nowrap;
-      z-index: 10;
+      padding: 8px 12px;
+      border-radius: 0.375rem; /* Rounded corners */
+      font-size: 0.875rem; /* Smaller font size */
+      z-index: 1000;
+      pointer-events: none; /* Prevents tooltip from blocking mouse events */
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2); /* More prominent shadow */
+      white-space: nowrap; /* Keep content on one line */
+      opacity: 0; /* Start hidden for fade-in */
+      transition: opacity 0.2s ease-in-out; /* Smooth fade-in/out */
+    }
+    #custom-tooltip.show {
+      opacity: 1;
     }
 
     /* Separator cell override */
@@ -143,7 +167,7 @@
 
 <table>
   <colgroup>
-    <col class="incident">    <col class="incident">    <col class="incident">    <col class="incident">    <col class="separator">   <col class="controv">     <col class="controv">     </colgroup>
+    <col class="incident">    <col class="incident">    <col class="incident">    <col class="incident">    <col class="separator">   <col class="controv">      <col class="controv">      </colgroup>
 
   <tr class="annotation">
     <td></td>
@@ -245,7 +269,7 @@
     </td>
     <td>
       
-  <ul>
+      <ul>
         <li data-tooltip="Owner of Defining Severity: Data">Loss of Sensitive data not reported within expected stakeholder requirements (customer, media, regulatory)</li>
         <li data-tooltip="Owner of Defining Severity: Global Security & Resilience (BCM)">Violent/criminal activists</li>
       </ul>
@@ -276,7 +300,7 @@
     <td>
       <ul>
         <li data-tooltip="Owner of Defining Severity: Cybersecurity">Potential Cyber compromise</li>
-        <li data-tooltip="Owner of DefiningSeverity: Global Security & Resilience">Cargo / Product Theft (regional inventory)</li>
+        <li data-tooltip="Owner of Defining Severity: Global Security & Resilience">Cargo / Product Theft (regional inventory)</li>
       </ul>
     </td>
     <td>
@@ -298,5 +322,98 @@
   </tr>
 </table>
 
+<!-- Custom Tooltip Element -->
+<div id="custom-tooltip" class="custom-tooltip"></div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    // Select all list items that have a data-tooltip attribute
+    const tooltipTriggers = document.querySelectorAll('li[data-tooltip]');
+    // Get the custom tooltip element
+    const customTooltip = document.getElementById('custom-tooltip');
+
+    // Loop through each tooltip trigger element
+    tooltipTriggers.forEach(trigger => {
+      // Add event listener for when the mouse enters the element
+      trigger.addEventListener('mouseenter', (e) => {
+        // Store the original title attribute if it exists, then remove it to prevent native tooltips
+        const originalTitle = trigger.getAttribute('title');
+        if (originalTitle) {
+          trigger.setAttribute('data-original-title', originalTitle);
+          trigger.removeAttribute('title');
+        }
+
+        // Get the tooltip content from the data-tooltip attribute
+        const tooltipContent = trigger.getAttribute('data-tooltip');
+        // Set the text content of the custom tooltip
+        customTooltip.textContent = tooltipContent;
+        // Make the tooltip visible by setting its display style to 'block'
+        customTooltip.style.display = 'block';
+        // Add a class to trigger the fade-in transition
+        customTooltip.classList.add('show');
+
+        // Initial positioning of the tooltip
+        // e.clientX and e.clientY provide the mouse cursor's coordinates relative to the viewport
+        // Adding 15px to both x and y to offset the tooltip slightly from the cursor
+        customTooltip.style.left = (e.clientX + 15) + 'px';
+        customTooltip.style.top = (e.clientY + 15) + 'px';
+      });
+
+      // Add event listener for when the mouse moves over the element
+      trigger.addEventListener('mousemove', (e) => {
+        // Update the tooltip's position continuously as the mouse moves
+        // This creates the "tracking" effect
+        customTooltip.style.left = (e.clientX + 15) + 'px';
+        customTooltip.style.top = (e.clientY + 15) + 'px';
+
+        // Optional: Add logic to prevent tooltip from going off-screen
+        // Get tooltip dimensions
+        const tooltipRect = customTooltip.getBoundingClientRect();
+        const viewportWidth = window.innerWidth;
+        const viewportHeight = window.innerHeight;
+
+        // Adjust X position if it goes off the right edge
+        if (tooltipRect.right > viewportWidth - 10) { // 10px buffer from edge
+          customTooltip.style.left = (e.clientX - tooltipRect.width - 15) + 'px';
+        }
+        // Adjust Y position if it goes off the bottom edge
+        if (tooltipRect.bottom > viewportHeight - 10) { // 10px buffer from edge
+          customTooltip.style.top = (e.clientY - tooltipRect.height - 15) + 'px';
+        }
+        // Adjust X position if it goes off the left edge (less common with +15px offset)
+        if (tooltipRect.left < 10) {
+            customTooltip.style.left = (e.clientX + 15) + 'px';
+        }
+        // Adjust Y position if it goes off the top edge (less common with +15px offset)
+        if (tooltipRect.top < 10) {
+            customTooltip.style.top = (e.clientY + 15) + 'px';
+        }
+      });
+
+      // Add event listener for when the mouse leaves the element
+      trigger.addEventListener('mouseleave', () => {
+        // Remove the 'show' class to trigger the fade-out transition
+        customTooltip.classList.remove('show');
+
+        // Restore the original title attribute if it was stored
+        const originalTitle = trigger.getAttribute('data-original-title');
+        if (originalTitle) {
+          trigger.setAttribute('title', originalTitle);
+          trigger.removeAttribute('data-original-title'); // Clean up the data attribute
+        }
+
+        // Listen for the end of the opacity transition before setting display to 'none'
+        // This prevents the native tooltip from flickering and ensures smooth fade-out
+        const transitionEndHandler = () => {
+          if (!customTooltip.classList.contains('show')) { // Only hide if it's truly meant to be hidden
+            customTooltip.style.display = 'none';
+          }
+          customTooltip.removeEventListener('transitionend', transitionEndHandler);
+        };
+        customTooltip.addEventListener('transitionend', transitionEndHandler);
+      });
+    });
+  });
+</script>
 </body>
 </html>
